@@ -261,7 +261,11 @@ def proxy_guild():
     except: return jsonify({"error": "API Error"})
 
 if __name__ == '__main__':
-    # Render-এ পোর্ট এনভায়রনমেন্ট ভেরিয়েবল থেকে নিতে হয়
+    import eventlet
+    eventlet.monkey_patch()
+
+    # Render pe port environment variable se lena
     port = int(os.environ.get("PORT", 10020))
-    # Render-এ রিয়েল-টাইম লগের জন্য host '0.0.0.0' হওয়া বাধ্যতামূলক
+
+    # SocketIO run with eventlet (production-ready)
     socketio.run(app, host='0.0.0.0', port=port)
